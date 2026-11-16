@@ -28,8 +28,8 @@ abstract class HitboxRendererMixin {
     @Inject(method = "emitGizmos", at = @At("HEAD"))
     private void darks$findTarget(double x, double y, double z, DebugValueAccess data, Frustum frustum,
                                   float tickProgress, CallbackInfo ci) {
-        darks$target = SpearTarget.find(tickProgress);
         var range = SpearTarget.hotbarRange();
+        darks$target = SpearTarget.find(tickProgress, range);
         darks$margin = range != null && SpearConfig.get().accurateHitbox ? range.hitboxMargin() : 0;
     }
 

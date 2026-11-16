@@ -32,9 +32,12 @@ public record SpearTarget(Entity entity, int rgb) {
     }
 
     public static SpearTarget find(float tickProgress) {
+        return find(tickProgress, hotbarRange());
+    }
+
+    public static SpearTarget find(float tickProgress, AttackRange range) {
         var client = Minecraft.getInstance();
         var player = client.player;
-        var range = hotbarRange();
         if (range == null || client.getCameraEntity() != player) return NONE;
         var regular = PlayerTargetAccessor.regularTarget(player, player.blockInteractionRange(),
                 player.entityInteractionRange(), tickProgress);
