@@ -71,4 +71,4 @@ processResources {
     inputs.properties(version: project.version, minecraft_version: mc, loader_version: project.loader_version, java_version: javaTarget)
     filesMatching(['fabric.mod.json', 'META-INF/neoforge.mods.toml']) { expand inputs.properties }
 }
-jar { from('LICENSE.txt') }
+jar { from('LICENSE', 'NOTICE') }

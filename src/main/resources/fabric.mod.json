@@ -5,7 +5,7 @@
   "name": "Spear+CombatHitboxes",
   "description": "Customizable melee and spear-range hitboxes, with an optional spear targeting-margin overlay.",
   "icon": "assets/darks_pvp_optimiser/icon.png",
-  "license": "All-Rights-Reserved",
+  "license": "Apache-2.0",
   "environment": "client",
   "entrypoints": {"modmenu": ["net.dark.darks_pvp_optimiser.client.SpearModMenu"]},
   "mixins": ["darks_pvp_optimiser.mixins.json"],

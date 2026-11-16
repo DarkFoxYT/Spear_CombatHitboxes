@@ -1,40 +1,65 @@
 package net.dark.darks_pvp_optimiser.client;
 
 import me.shedaniel.clothconfig2.api.ConfigBuilder;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 
 public final class SpearSettings {
     private SpearSettings() {}
 
-    public static void addCategory(ConfigBuilder builder) {
-        var config = SpearConfig.get();
-        var defaults = new SpearConfig();
-        var entries = builder.entryBuilder();
-        var category = builder.getOrCreateCategory(Component.literal("Spear"));
+    public static Screen standaloneScreen(Screen parent) {
+        ConfigBuilder screen = ConfigBuilder.create()
+                .setParentScreen(parent)
+                .setTitle(Component.literal("Spear+CombatHitboxes"));
+        addCategory(screen);
+        return screen.build();
+    }
 
-        category.addEntry(entries.startAlphaColorField(Component.literal("Spear range color"), config.spearColor)
-                .setDefaultValue(defaults.spearColor).setSaveConsumer(value -> config.spearColor = value).build());
-        category.addEntry(entries.startAlphaColorField(Component.literal("Regular melee range color"), config.meleeColor)
-                .setDefaultValue(defaults.meleeColor).setSaveConsumer(value -> config.meleeColor = value).build());
-        category.addEntry(entries.startFloatField(Component.literal("Target line width"), config.lineWidth)
-                .setDefaultValue(defaults.lineWidth).setMin(0.5f).setMax(10.0f)
-                .setSaveConsumer(value -> config.lineWidth = value).build());
-        category.addEntry(entries.startBooleanToggle(Component.literal("Accurate spear hitbox"), config.accurateHitbox)
-                .setDefaultValue(false)
-                .setTooltip(Component.literal("Show the spear's targeting margin as an extra box, with the normal body box in white."),
-                        Component.literal("Uses the held spear, or the first spear in your hotbar. Walls and attack range still apply."))
-                .setSaveConsumer(value -> config.accurateHitbox = value).build());
-        category.addEntry(entries.startAlphaColorField(Component.literal("Extra hitbox color"), config.marginColor)
+    public static void addCategory(ConfigBuilder screen) {
+        SpearConfig settings = SpearConfig.get();
+        SpearConfig defaults = new SpearConfig();
+        var entries = screen.entryBuilder();
+        var spear = screen.getOrCreateCategory(Component.literal("Spear"));
+
+        spear.addEntry(entries.startAlphaColorField(Component.literal("Spear range color"), settings.spearColor)
+                .setDefaultValue(defaults.spearColor)
+                .setSaveConsumer(color -> settings.spearColor = color)
+                .build());
+        spear.addEntry(entries.startAlphaColorField(Component.literal("Regular melee range color"), settings.meleeColor)
+                .setDefaultValue(defaults.meleeColor)
+                .setSaveConsumer(color -> settings.meleeColor = color)
+                .build());
+        spear.addEntry(entries.startFloatField(Component.literal("Target line width"), settings.lineWidth)
+                .setMin(SpearConfig.MIN_LINE_WIDTH)
+                .setMax(SpearConfig.MAX_LINE_WIDTH)
+                .setDefaultValue(defaults.lineWidth)
+                .setSaveConsumer(width -> settings.lineWidth = width)
+                .build());
+
+        spear.addEntry(entries.startBooleanToggle(Component.literal("Accurate spear hitbox"), settings.accurateHitbox)
+                .setDefaultValue(defaults.accurateHitbox)
+                .setTooltip(Component.literal("Show the spear’s extra targeting margin around the white body box."),
+                        Component.literal("Uses your held spear, or the first spear in your hotbar."))
+                .setSaveConsumer(showMargin -> settings.accurateHitbox = showMargin)
+                .build());
+        spear.addEntry(entries.startAlphaColorField(Component.literal("Extra hitbox color"), settings.marginColor)
                 .setDefaultValue(defaults.marginColor)
-                .setTooltip(Component.literal("Color of the extra box when this entity is not targeted."))
-                .setSaveConsumer(value -> config.marginColor = value).build());
-        category.addEntry(entries.startFloatField(Component.literal("Extra hitbox line width"), config.marginLineWidth)
-                .setDefaultValue(defaults.marginLineWidth).setMin(0.5f).setMax(10.0f)
-                .setSaveConsumer(value -> config.marginLineWidth = value).build());
-        Runnable originalSave = builder.getSavingRunnable();
-        builder.setSavingRunnable(() -> {
-            if (originalSave != null) originalSave.run();
-            config.save();
+                .setTooltip(Component.literal("Color of the extra box on targets outside your crosshair."))
+                .setSaveConsumer(color -> settings.marginColor = color)
+                .build());
+        spear.addEntry(entries.startFloatField(Component.literal("Extra hitbox line width"), settings.marginLineWidth)
+                .setMin(SpearConfig.MIN_LINE_WIDTH)
+                .setMax(SpearConfig.MAX_LINE_WIDTH)
+                .setDefaultValue(defaults.marginLineWidth)
+                .setSaveConsumer(width -> settings.marginLineWidth = width)
+                .build());
+
+        Runnable saveOtherSettings = screen.getSavingRunnable();
+        screen.setSavingRunnable(() -> {
+            if (saveOtherSettings != null) {
+                saveOtherSettings.run();
+            }
+            settings.save();
         });
     }
 }

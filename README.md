@@ -16,7 +16,7 @@ See when your target is within spear reach. A client-side mod that works on its 
 
 - **Orange at spear range, red at normal melee range.** Keep a spear anywhere in your hotbar, even while holding another item.
 - **Custom colors and line widths.** Make the highlights look how you want.
-- **Integrated settings.** A Spear category inside Combat Hitboxes’ settings, plus a standalone settings screen.
+- **Integrated settings.** With Cloth Config installed, open the Spear category from Mod Menu on Fabric or the mod’s Config screen on NeoForge. On Fabric, the category also appears in Combat Hitboxes and Combat Hitboxes+.
 - **Optional accurate hitbox overlay.** Show the spear’s extra targeting margin while keeping the original white hitbox visible. Disabled by default.
 - **Standalone or compatible.** Use vanilla hitboxes with **F3+B**, Combat Hitboxes, or Combat Hitboxes+.
 - **Fabric and NeoForge support.** For Minecraft versions with vanilla spears.
@@ -24,3 +24,5 @@ See when your target is within spear reach. A client-side mod that works on its 
 Highlights show reach; they do not change your attacks or guarantee a hit.
 
 Ps: i didn't make Combat Hitboxes, this is just a simple extention but it works standalone.
+
+[Combat Hitboxes](https://modrinth.com/mod/combat-hitboxes) by sootysplash · [Combat Hitboxes+](https://modrinth.com/mod/combat-hitboxes-plus) by TrueWulf
