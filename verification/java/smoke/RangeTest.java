@@ -48,13 +48,13 @@ public class RangeTest implements FabricClientGameTest {
             });
 
             checkDrawing(context, GREEN, false);
-            context.takeScreenshot("custom-spear-width");
+            captureHitboxes(context);
             context.runOnClient(game -> {
                 SpearConfig.get().spearColor = ORANGE;
                 SpearConfig.get().accurateHitbox = true;
             });
             checkDrawing(context, ORANGE, true);
-            context.takeScreenshot("accurate-spear-hitbox");
+            captureHitboxes(context);
 
             context.runOnClient(game -> SpearConfig.get().spearColor = 0);
             checkDrawing(context, 0, true);
@@ -123,6 +123,12 @@ public class RangeTest implements FabricClientGameTest {
             });
         }
         System.out.println("Passed " + scenario);
+    }
+
+    private void captureHitboxes(ClientGameTestContext context) {
+        // F2 captures the debug lines from the completed frame.
+        context.getInput().pressKey(options -> options.keyScreenshot);
+        context.waitTicks(3);
     }
 
     private void checkDrawing(ClientGameTestContext context, int color, boolean showMargin) {
