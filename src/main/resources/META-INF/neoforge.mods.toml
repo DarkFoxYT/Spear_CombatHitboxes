@@ -5,7 +5,10 @@ license="Apache-2.0"
 modId="darks_pvp_optimiser"
 version="${version}"
 displayName="Spear+CombatHitboxes"
+logoFile="icon.png"
+logoBlur=false
 iconFile="assets/darks_pvp_optimiser/icon.png"
+iconBlur=false
 description="Customizable melee and spear-range hitboxes, with an optional spear targeting-margin overlay."
 [[mixins]]
 config="darks_pvp_optimiser.mixins.json"

@@ -12,5 +12,15 @@ allprojects { p ->
         }
         p.neoForge.runs.client.programArgument('--quickPlaySingleplayer')
         p.neoForge.runs.client.programArgument('Verification')
+        p.tasks.named('runClient') {
+            doFirst {
+                def options = p.file("build/run-${mc}-neoforge/options.txt")
+                def lines = options.exists() ? options.readLines('UTF-8') : []
+                lines.removeAll { it.startsWith('onboardAccessibility:') }
+                lines.add('onboardAccessibility:false')
+                options.parentFile.mkdirs()
+                options.setText(lines.join('\n') + '\n', 'UTF-8')
+            }
+        }
     }
 }
