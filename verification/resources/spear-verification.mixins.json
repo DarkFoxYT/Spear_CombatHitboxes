@@ -1,1 +1,0 @@
-{"required":true,"package":"smoke.mixin","compatibilityLevel":"JAVA_21","client":["CaptureMixin"],"injectors":{"defaultRequire":1}}
